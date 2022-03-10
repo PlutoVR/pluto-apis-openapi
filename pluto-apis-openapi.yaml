@@ -1,0 +1,162 @@
+openapi: 3.0.0
+info:
+  title: Pluto APIs
+  description: API definitions for Pluto services
+  contact:
+    name: Pluto engineering team
+    email: engineering@plutovr.com
+  version: 1.0.0
+servers:
+- url: /v2
+paths:
+  /user:
+    get:
+      description: Get information about the logged in user
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+        "404":
+          description: Not found
+  /conversation:
+    get:
+      description: Get information about the current conversation
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/conversation'
+        "404":
+          description: Not found
+  /rooms/{roomId}/join:
+    post:
+      description: Join a room by its id
+      parameters:
+      - name: roomId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/room_id'
+      responses:
+        "202":
+          description: Accepted
+        "404":
+          description: Not found
+  /rooms/leave:
+    post:
+      description: Leave the current room
+      responses:
+        "202":
+          description: Accepted
+        "404":
+          description: Not found
+components:
+  schemas:
+    user:
+      type: object
+      properties:
+        username:
+          $ref: '#/components/schemas/username'
+        displayName:
+          type: string
+      description: Describes information about a user
+      example:
+        username: johndoe
+        displayName: John Doe
+    username:
+      type: string
+      description: The unique identifier for the user
+      example: johndoe
+    conversation:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/conversation_id'
+        anchor:
+          $ref: '#/components/schemas/conversation_anchor'
+      description: Describes information about a conversation
+    conversation_id:
+      type: string
+      description: A unique id for a Pluto conversation
+      example: 03721cc4156b49b635c1e74b1b19d1cef91c0a230314e700b5ddcb00937338a073dc6347c323f88cb92d79ae2b8759ba7bf0293e181b3b840917982b7c03e804
+    room_id:
+      type: string
+      description: A unique id for a room
+      example: test_room_id
+    conversation_anchor:
+      type: object
+      properties:
+        position:
+          $ref: '#/components/schemas/location'
+        quaternion:
+          $ref: '#/components/schemas/quaternion'
+      description: The root of the Pluto conversation
+    location:
+      type: object
+      properties:
+        x:
+          type: number
+          description: The x component.
+          format: double
+        "y":
+          type: number
+          description: The y component.
+          format: double
+        z:
+          type: number
+          description: The z component.
+          format: double
+      description: A point in 3D space.
+      example:
+        x: 0
+        "y": 0
+        z: 0
+    quaternion:
+      type: object
+      properties:
+        w:
+          type: number
+          description: The scalar component.
+          format: double
+        x:
+          type: number
+          description: The x component.
+          format: double
+        "y":
+          type: number
+          description: The y component.
+          format: double
+        z:
+          type: number
+          description: The z component.
+          format: double
+      description: "A [Quaternion](//en.wikipedia.org/wiki/Quaternion)."
+      example:
+        w: 1
+        x: 0
+        "y": 0
+        z: 0
+  parameters:
+    conversationId:
+      name: conversationId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        $ref: '#/components/schemas/conversation_id'
+    roomId:
+      name: roomId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        $ref: '#/components/schemas/room_id'
