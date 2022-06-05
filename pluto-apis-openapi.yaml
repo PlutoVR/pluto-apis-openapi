@@ -5,7 +5,7 @@ info:
   contact:
     name: Pluto engineering team
     email: engineering@plutovr.com
-  version: 1.0.0
+  version: 1.0.1
 servers:
 - url: /v2
 paths:
@@ -19,6 +19,29 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/user'
+        "404":
+          description: Not found
+  /user/data:
+    get:
+      description: Get metadata associated with this user
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user_data'
+        "404":
+          description: Not found
+    put:
+      description: Update metadata associated with this user
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user_data'
         "404":
           description: Not found
   /conversation:
@@ -70,6 +93,9 @@ components:
       example:
         username: johndoe
         displayName: John Doe
+    user_data:
+      type: object
+      description: Metadata associated with the user
     username:
       type: string
       description: The unique identifier for the user
