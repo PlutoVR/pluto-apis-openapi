@@ -42,8 +42,8 @@ paths:
             schema:
               type: object
       responses:
-        "200":
-          description: Ok
+        "204":
+          description: Resource updated succesfully
           content:
             application/json:
               schema:
