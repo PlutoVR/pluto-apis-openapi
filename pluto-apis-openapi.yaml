@@ -30,18 +30,24 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/user_data'
+                type: object
         "404":
           description: Not found
     put:
       description: Update metadata associated with this user
+      requestBody:
+        description: Key value pairs to store
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         "200":
           description: Ok
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/user_data'
+                type: object
         "404":
           description: Not found
   /conversation:
@@ -93,9 +99,6 @@ components:
       example:
         username: johndoe
         displayName: John Doe
-    user_data:
-      type: object
-      description: Metadata associated with the user
     username:
       type: string
       description: The unique identifier for the user
@@ -130,15 +133,15 @@ components:
         x:
           type: number
           description: The x component.
-          format: double
+          format: float
         "y":
           type: number
           description: The y component.
-          format: double
+          format: float
         z:
           type: number
           description: The z component.
-          format: double
+          format: float
       description: A point in 3D space.
       example:
         x: 0
@@ -150,19 +153,19 @@ components:
         w:
           type: number
           description: The scalar component.
-          format: double
+          format: float
         x:
           type: number
           description: The x component.
-          format: double
+          format: float
         "y":
           type: number
           description: The y component.
-          format: double
+          format: float
         z:
           type: number
           description: The z component.
-          format: double
+          format: float
       description: "A [Quaternion](//en.wikipedia.org/wiki/Quaternion)."
       example:
         w: 1
